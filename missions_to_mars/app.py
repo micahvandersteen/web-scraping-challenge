@@ -5,50 +5,44 @@
 ### was scraped in the 'mission_to_mars.ipynb' file.
 ################################################################
 
-#Next, create a route called /scrape that will import your scrape_mars.py script and call your scrape function.
-
-#Store the return value in Mongo as a Python dictionary.
-
-
-
-#Create a root route / that will query your Mongo database and pass the mars data into an HTML template to display the data.
-
-
-#Create a template HTML file called index.html that will take the mars data dictionary and display all of the data in the #appropriate HTML elements. Use the following as a guide for what the final product should look like, but feel free to create your # own design.
-
 # importing dependencies
 from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
+import pymongo
 import scrape_mars
 
 # instantiating Flask app
 app = Flask(__name__)
 
-# establishing connection to MongoDB via PyMongo
-mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_app")
+# Connect to MongoDB
+conn = "mongodb://localhost:27017"
+client = pymongo.MongoClient(conn)
 
-# creating homepage
-@app.route('/')
-def home():
-    
-    # Find one record of data from the mongo database
-    #destination_data = mongo.db.collection.find_one()
-
-    # Return template and data
-    #return render_template("index.html", vacation=destination_data)
-
+# Use database and create it if it does not exist
+db = client.mars_db
 
 # creating '/scrape' route
 @app.route('/scrape')
 def scrape():
     
-    mars_info = scrape_mars.scrape_info()
+    # scraping data
+    mars_scrape_data = scrape_mars.scrape()
 
     # Update Mongo database 
-    mongo.db.collection.update({}, mars_info, upsert = True)
+    db.mars_info_coll.update({}, mars_scrape_data, upsert = True)
+    
+    # getting data
+    mars_data = db.mars_info_coll.find_one()
+    
+    # Redirect back to home page display
+    return redirect("/", code = 302)
 
-    # Redirect back to home page
-    return redirect("/")
+# creating homepage route
+@app.route('/')
+def index():
+
+    # Return template and data
+    return render_template("index.html", mars_data = mars_data)
 
 
 if __name__ == "__main__":

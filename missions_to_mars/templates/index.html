@@ -5,22 +5,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Costa Rica Weather</title>
+  <title>Micah's Mars Scraping Webpage</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-  <div class="container-fluid">
+  <div class="container">
+
     <div class="jumbotron text-center">
-      <h1>Let's go to Mars! Check out Mars' recent events...</h1>
-      <p></p>
-      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
+      <h1>Lehgo go to Mars! Click below to scrape the latest data from the web...</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">SCRAPE DATA</a></p>
     </div>
-    <img src="{{ vacation.sloth_img }}" alt="Sloth">
-    <h2>The typical weather in Costa Rica is:</h2>
-    <h3>Max Temp: {{ vacation.max_temp }}</h3>
-    <h3>Min Temp: {{ vacation.min_temp }}</h3>
-  </div>
+
+    <!-- SETTING UP PAGE -->
+    <div class="row" id="mars_landing_info">
+      <div class="col-md-12 col-xs-12"><h4>The Latest News: </h4></div>
+      <div class="col-md-12 col-xs-12">
+        <h2 class="heading">{{ mars_data.latest_headline }}</h2></div>
+      <div class="col-md-12 col-xs-12"></div>
+      <div class="col-md-12 col-xs-12"><li><strong>{{ mars_data.latest_description }}</strong></li></div>
+      <div class="col-md-12 col-xs-12"><br></div>
+      <div class="col-md-6 col-xs-12"><div class="featured_image">
+        <img src= {{mars_data.featured_image_url}} alt="Mars featured image" 
+          height="450" width="450"></div></div>
+      <div class="col-md-1 col-xs-12"><br></div>
+      <div class="col-md-5 col-xs-12"> {{ mars_data.mars_facts_df }} </div>
+      <div class="col-md-6 col-xs-12"><br></div>
+      <div class="col-md-1 col-xs-12"><br></div>
+      <div class="col-md-5 col-xs-12"><strong>Latest Weather Report From Our Future Home: 
+        </strong> {{ mars_data.mars_weather }}</div>
+
+      <div class="col-md-12 col-xs-12"><br></div>
+      <div class="col-md-12 col-xs-12" id="mars_hemispheres"><h2>Mars' Hemispheres w/ Full Resolution Photos!</h2></div>
+      <div class="col-md-12 col-xs-12"><br></div>
+      <div class="col-md-6 col-sm-3 col-xs-12"><div class="featured_image"> {{ mars_data.hemisphere_img_urls[0]['title'] }}
+        <img src= {{ mars_data.hemisphere_img_urls[0]['img_url'] }} alt="Mars Hemisphere Images" 
+          height="450" width="450"></div></div>
+      <div class="col-md-6 col-sm-3 col-xs-12"><div class="featured_image"> {{ mars_data.hemisphere_img_urls[1]['title'] }}
+        <img src= {{mars_data.hemisphere_img_urls[1]['img_url']}} alt="Mars Hemisphere Images" 
+          height="450" width="450"></div></div>
+      <div class="col-md-6 col-sm-3 col-xs-12"><div class="featured_image"> {{ mars_data.hemisphere_img_urls[2]['title'] }}
+        <img src= {{mars_data.hemisphere_img_urls[2]['img_url']}} alt="Mars Hemisphere Images" 
+          height="450" width="450"></div></div>
+      <div class="col-md-6 col-sm-3 col-xs-12"><div class="featured_image"> {{ mars_data.hemisphere_img_urls[3]['title'] }}
+        <img src= {{mars_data.hemisphere_img_urls[3]['img_url']}} alt="Mars Hemisphere Images" 
+          height="450" width="450"></div></div>
+
+    </div>
+
   </div>
 </body>
 
